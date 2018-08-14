@@ -24,6 +24,9 @@ String.prototype.repAll = function(search, replacement) {
 let pieces_rus = ["С", "К", "Ф", "Кр", "Л", 'п'];
 let pieces_eng = ["B", "N", "Q", "K", "R", 'p'];
 
+router.get("/", function (req, res) {
+    res.render("layout", {});
+})
 
 /* GET home page. */
 router.get('/parser/id', function(req, res, next) {
