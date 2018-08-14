@@ -1,0 +1,20 @@
+extends ../../layout
+
+block content
+    h3= temp_user_id
+    h1= title
+
+    div(class='page start' id='page-start')
+        button(id='PP') Против человека
+        button(id='CP') Против компьютера
+
+    //PP
+    include pp
+    //CP
+    include cp
+    //GAME BOARD
+    include gameboard
+    // SETTING
+    include settings
+
+

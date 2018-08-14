@@ -1,0 +1,46 @@
+extends ../layout
+
+block content
+    br
+    br
+    a(href="/parser/packet") Пакетный режим
+    br
+    a(href="/parser/id") Одиночный режим
+    br
+
+    if packet === "Y"
+        h1 Пакетный режим
+    else if packet === "N"
+        h1 Одиночный режим
+    else
+        h1= title
+    h2= example
+
+    if(themes)
+        for theme in themes
+            h4 ID: #{theme.id} Тема: #{theme.theme}
+
+    if packet === "N"
+        form(action='/parser/id' method='post' id='form')
+            input(type='text' name='theme' id='theme' placeholder="ID темы")
+            br
+            input(type='text' name='url' id='url' placeholder="URL задачи")
+            br
+            input(type='submit' value='Начать парсинг')
+    else if packet === "Y"
+        form(action='/parser/packet' method='post' id='form')
+            input(type='text' name='theme' id='theme' placeholder="ID темы")
+            br
+            input(type='text' name='url' id='url' placeholder="URL страницы с задачами")
+            br
+            input(type='submit' value='Начать парсинг')
+
+    p= status
+
+    div
+        pre#answer= textFile
+
+
+
+        script.
+            //document.write('<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + (text) + '" download="#{txt_name}.txt">Скачать #{txt_name}</a>')

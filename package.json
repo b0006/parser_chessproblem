@@ -1,0 +1,26 @@
+{
+  "name": "Parser",
+  "version": "0.0.1",
+  "description": "Parser chessproblem",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
+    "connect": "^3.6.6",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-myconnection": "^1.0.4",
+    "http": "0.0.0",
+    "jade": "^1.11.0",
+    "line-reader": "^0.4.0",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.18.3",
+    "osmosis": "^1.1.8",
+    "path": "^0.12.7",
+    "pug": "^2.0.3",
+    "request": "^2.87.0",
+    "socket.io": "^1.3.5"
+  }
+}

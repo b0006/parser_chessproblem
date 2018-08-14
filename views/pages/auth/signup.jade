@@ -1,0 +1,12 @@
+extends ../../layout
+
+block content
+
+    form(id="signup" name="signup" method="post" action="/signup")
+        label(for="email") Email Address
+        input(class="text" name="email" type="email" )
+        label(for="nickname") Nickname
+        input(name="nickname" type="text")
+        label(for="hash") Password
+        input(name="hash" type="password")
+        input(class="btn" type="submit" value="Sign Up")

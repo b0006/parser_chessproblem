@@ -1,0 +1,14 @@
+div(class='page computer' id='page-computer')
+    h2 Против компьютера
+    h3 Сложность
+    form(action='/game/ai' id='cpu_level' method='post')
+        input(type='hidden' name="game_mode" value="CP")
+        input(type='radio' name='level' value="low")
+        | Легкий
+        input(type='radio' name='level' value="medium")
+        | Средний
+        input(type='radio' name='level' value="high")
+        | Высокий
+        button(id='cp_play' type='submit') Играть
+    h3 Настройка игры
+    button(class="button-setting") Опции

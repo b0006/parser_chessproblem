@@ -1,0 +1,142 @@
+doctype html
+html
+    head
+        title #{title} #{current_date}
+        link(rel='stylesheet', href='/css/style.css')
+        script(src="/lib/jquery-1.11.1.js")
+        script(src="/lib/socket.io-1.2.0.js")
+
+    body
+        a(href="/") На главную
+        br
+        a(href="/game") Игра
+
+        if isAuth
+            script.
+                let socket = io();
+                let login = "";
+                if('#{nickname}' == 'anonymus') {
+                    login = '#{nickname + "_" + isAuth}';
+                }
+                else {
+                    login = '#{nickname}';
+                }
+                socket.emit('login', login);
+
+            br
+            if nickname == "anonymus"
+                p Здравствуйте, #{nickname + "_" + isAuth}
+            else
+                p Здравствуйте, #{nickname}
+            a(href="/logout") Выйти
+
+    block content
+
+    if packet !== "N" || packet !== "Y"
+        script(src="/lib/jquery.maskedinput.min.js")
+        script(src="/lib/jquery.redirect.js")
+        script(src="/lib/dynamicListener.js")
+
+        script.
+            $( document ).ready(function() {
+                $("#time_check_text").mask("99:99");
+
+                addDynamicEventListener(document.body, 'click', '#time_check_checkbox', function (e) {
+                    if ($("#time_check_checkbox").prop('checked')) {
+                        $("#time_check_text").show();
+                    }
+                    else {
+                        $("#time_check_text").hide();
+                    }
+                });
+
+                addDynamicEventListener(document.body, 'click', '#fuchs', function (e) {
+                    if ($("#fuchs").prop('checked')) {
+                        $("#color_potencial_fuchs").show();
+                    }
+                    else {
+                        $("#color_potencial_fuchs").hide();
+                    }
+                });
+
+                addDynamicEventListener(document.body, 'click', '#cp_play', function (e) {
+                    let fields = $("#cpu_level").serializeArray();
+
+                    let isChooseLevel = false;
+
+                    fields.forEach(function (value, index) {
+                       if(value.name === "level") {
+                           isChooseLevel = true;
+                       }
+                    });
+
+                    if(!isChooseLevel) {
+                        alert("Выберите сложность");
+                        e.preventDefault();
+                    }
+                });
+            });
+
+        script.
+            $(document).ready(function () {
+                addDynamicEventListener(document.body, 'submit', '#cpu_level', function (e) {
+                    e.preventDefault();
+
+                    // это ##### товарищи, но мне все-равно
+                    let data_form_settings = $("#settings").serializeArray();
+                    let comp_level = $("#cpu_level").serializeArray();
+                    let data = [];
+
+                    data_form_settings.forEach(function (value) {
+                        data[value.name] = [];
+                        data[value.name] = value.value;
+                    });
+
+                    comp_level.forEach(function (value) {
+                        data[value.name] = [];
+                        data[value.name] = value.value;
+                    });
+
+                    $.redirect("/game/ai", data, "POST");
+
+                });
+
+            });
+
+        if game_mode === "CP"
+            script.
+                $(document).ready(function () {
+                    $("#page-game").show();
+
+                    $("#page-start").hide();
+                    $("#page-login").hide();
+                    $("#page-lobby").hide();
+                    $("#page-computer").hide();
+                    $("#page-setting").hide();
+                });
+
+
+        if typeof level !== 'undefined'
+            script(
+            src="/js/comp.js"
+            level='#{level}'
+            color_potencial_step='#{color_potencial_step}'
+            time_check_checkbox='#{time_check_checkbox}'
+            time_check_text='#{time_check_text}'
+            multiattack='#{multiattack}'
+            fuchs='#{fuchs}'
+            simple_back_attack='#{simple_back_attack}'
+            color_potencial_fuchs = '#{color_potencial_fuchs}'
+            type_game='#{type_game}'
+            )
+        else
+            script(src="/js/script.js"
+            color_potencial_step='#{color_potencial_step}'
+            time_check_checkbox='#{time_check_checkbox}'
+            time_check_text='#{time_check_text}'
+            multiattack='#{multiattack}'
+            fuchs='#{fuchs}'
+            simple_back_attack='#{simple_back_attack}'
+            nickname='#{nickname}'
+            id_nickname='#{isAuth}'
+            )
